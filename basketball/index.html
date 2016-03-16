@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<title>SynthBasic</title>
+<script src="http://sdk.altvr.com/libs/three.js/r73/build/three.js"></script>
+<script src="http://underscorejs.org/underscore-min.js"></script>
+<script src="../dist/altspace.min.js"></script>
+<script src="http://sdk.altvr.com/libs/three.js/r73/examples/js/loaders/MTLLoader.js"></script>
+
+</head>
+<body>
+</body>
+<script>
+(function(){var a = window.altspace; (function insert(ss, t){for(var i in ss) {for (var j in ss[i]) {t[j] = ss[i][j];}};})([a, a.utilities,a.utilities.behaviors, a.utilities.shims], window.alt = {})})();
+var sceneSync;
+var sim = altspace.utilities.Simulation();
+var config = {
+	authorId: 'mo1ok',
+	appId: 'basketball'
+};
+
+function connectAltSpace() {
+	altspace.utilities.sync.connect(config).then(
+		function(connection) {
+		  sceneSync = altspace.utilities.behaviors.SceneSync(connection.instance,
+		    {
+		      instantiators: {
+						'createBall': createBall,
+				 		},
+		      ready: ready
+		    });
+		  sim.scene.addBehavior(sceneSync);
+	});
+}
+function ready(firstInstance) {
+	if (firstInstance) {
+		sceneSync.instantiate('createSynth');
+	}
+}
+function main() {
+	connectAltSpace();
+}
+main();
+</script>
+</html>
