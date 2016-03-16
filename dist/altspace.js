@@ -6,7 +6,7 @@
  * and lightweight code-base.
  * Some ideas of query string parsing had been taken from Jan Wolter
  * @see http://unixpapa.com/js/querystring.html
- * 
+ *
  * @license MIT
  * @author Mykhailo Stadnyk <mikhus@gmail.com>
  */
@@ -87,7 +87,7 @@
 
 			parseQs( self);
 		},
-		
+
 		decode = function(s) {
 			s = s.replace( /\+/g, ' ');
 
@@ -97,20 +97,20 @@
 						n1 = parseInt( hex1, 16) - 0xE0,
 						n2 = parseInt( hex2, 16) - 0x80
 					;
-	
+
 					if (n1 == 0 && n2 < 32) {
 						return code;
 					}
-	
+
 					var
 						n3 = parseInt( hex3, 16) - 0x80,
 						n = (n1 << 12) + (n2 << 6) + n3
 					;
-	
+
 					if (n > 0xFFFF) {
 						return code;
 					}
-	
+
 					return String.fromCharCode( n);
 				}
 			);
@@ -118,13 +118,13 @@
 			s = s.replace( /%([cd][0-9a-f])%([89ab][0-9a-f])/gi,
 				function( code, hex1, hex2) {
 					var n1 = parseInt(hex1, 16) - 0xC0;
-	
+
 					if (n1 < 2) {
 						return code;
 					}
-	
+
 					var n2 = parseInt(hex2, 16) - 0x80;
-	
+
 					return String.fromCharCode( (n1 << 6) + n2);
 				}
 			);
@@ -502,13 +502,13 @@ U.prototype.We=function(a,b){x("Firebase.resetPassword",2,2,arguments.length);fg
     }
 }());
 /**
- * The Sync utility is currently based on Firebase. It provides a quick way 
- * to synchronize apps between users (even when they are running outside of 
- * AltspaceVR). 
- * During the SDK beta, please consider all data stored with the sync 
- * utility to be ephemeral (it may be cleared or clobbered at any time). 
+ * The Sync utility is currently based on Firebase. It provides a quick way
+ * to synchronize apps between users (even when they are running outside of
+ * AltspaceVR).
+ * During the SDK beta, please consider all data stored with the sync
+ * utility to be ephemeral (it may be cleared or clobbered at any time).
  * You do not need a Firebase account to use the Sync utility.
- * 
+ *
  *
  * Refer to the [Firebase API documentation](https://www.firebase.com/docs/web/api/)
  * when working with the sync instance.
@@ -590,7 +590,7 @@ altspace.utilities.sync = (function () {
             }, { remember: 'sessionOnly' });
         });
     }
-    
+
     /**
      * Retreived
      * via [altspace.utilities.sync.connect]{@link module:altspace/utilities/sync#connect}.
@@ -606,8 +606,8 @@ altspace.utilities.sync = (function () {
         */
 
     /**
-        * A Firebase reference to the current instance of the app. 
-        * This will change if the query paramater is removed through navigation, rebeaming, the space timing out, or other reasons. 
+        * A Firebase reference to the current instance of the app.
+        * This will change if the query paramater is removed through navigation, rebeaming, the space timing out, or other reasons.
         * This can be used as an input to SceneSync
         * @instance
         * @member {Firebase} instance
@@ -622,7 +622,7 @@ altspace.utilities.sync = (function () {
         */
 
     /**
-        * A Firebase reference for the app. 
+        * A Firebase reference for the app.
         * This can be used for things like persistent high-scores, dynamic configuration, or inter-instance communication.
         * @instance
         * @member {Firebase} app
@@ -719,7 +719,7 @@ altspace.utilities.sync = (function () {
 
 
     /**
-     * Returns a firebase instance, just as if you had called new Firebase()  
+     * Returns a firebase instance, just as if you had called new Firebase()
      *
      * By using syncInstance.parent() you can store cross-instance data like high scores. Likewise you can store persistent user data at syncInstance.parent().child([userId).
      * @deprecated The connect function can do this and more! Please switch to using it instead. This function will be removed in the next major version
@@ -734,11 +734,11 @@ altspace.utilities.sync = (function () {
      * @memberof module:altspace/utilities/sync
      * @example
      *  var syncInstance = altspace.utilities.sync.getInstance({
-     *      // All sync instances with the same instance id will share 
-     *      // properties. 
-     *      instanceId: yourInstanceId, 
+     *      // All sync instances with the same instance id will share
+     *      // properties.
+     *      instanceId: yourInstanceId,
      *      // This helps to prevent collisions.
-     *      authorId: yourAuthorId  
+     *      authorId: yourAuthorId
      *  });
      */
     return {
@@ -746,7 +746,7 @@ altspace.utilities.sync = (function () {
       getInstance: getInstance,
       authenticate: deprecatedAuthenticate
     };
-    
+
 }());
 
 /**
@@ -770,8 +770,8 @@ altspace.utilities.codePen = (function () {
     }
 
 	/**
-	 * Will stop code exection and post a message informing the user to 
-	 * open the example in VR  
+	 * Will stop code exection and post a message informing the user to
+	 * open the example in VR
 	 * @method ensureInVR
 	 * @memberof module:altspace/utilities/codePen
 	 */
@@ -825,7 +825,7 @@ altspace.utilities.codePen = (function () {
     }
 
 	/**
-	 * Sets the name to be used by ensureInVR()  
+	 * Sets the name to be used by ensureInVR()
 	 * @method setName
 	 * @param {String} name
 	 * @memberof module:altspace/utilities/codePen
@@ -892,7 +892,7 @@ window.altspace.utilities = window.altspace.utilities || {};
  *
  * If all of your application logic is in behaviors, you do not need to create any additional requestAnimationFrame loops.
  *
- * It also automatically uses the WebGL renderer when running in a 
+ * It also automatically uses the WebGL renderer when running in a
  * desktop browser and emulates cursor events with mouse clicks.
  * @class Simulation
  * @param {Object} [config] Optional parameters.
@@ -902,20 +902,21 @@ window.altspace.utilities = window.altspace.utilities || {};
 altspace.utilities.Simulation = function (config) {
     config = config || {};
     if (config.auto === undefined) config.auto = true;
-
+		Physijs.scripts.ammo = '../dist/ammo.js';
+		Physijs.scripts.worker = '../dist/physijs_worker.js';
     var exports = {};
-    var scene = new THREE.Scene();
+    var scene = new Physijs.Scene();
     var renderer;
     var camera;
 
     setup();
 
     function loop() {
+			  scene.simulate();
         window.requestAnimationFrame(loop);
 
         if (scene.updateAllBehaviors)
             scene.updateAllBehaviors();
-
         renderer.render(scene, camera);
     }
 
@@ -1082,7 +1083,7 @@ altspace.utilities.multiloader = (function(){
             if (TRACE) console.log('Loaded '+reqCount+' models in '+elapsed+' seconds');
             onComplete();
           }
-        }, onProgress, function(){//onError 
+        }, onProgress, function(){//onError
           var url = xhr.target.responseURL || '';
           req.error = 'Error loading file '+url;
         });
@@ -1113,9 +1114,9 @@ altspace.utilities.multiloader = (function(){
  */
 
 /**
- * The AltspaceDK includes a Behaviors shim that adds Behavior capabilities to 
+ * The AltspaceDK includes a Behaviors shim that adds Behavior capabilities to
  * Three.js.
- * It adds methods to Three.js' Scene and Object3D classes which allow you to 
+ * It adds methods to Three.js' Scene and Object3D classes which allow you to
  * add, remove, retrieve and use Behaviors.
  *
  * @namespace THREE
@@ -1130,7 +1131,7 @@ altspace.utilities.multiloader = (function(){
 /**
  * Update the behaviors of all the objects in this Scene.
  * @instance
- * @method updateAllBehaviors 
+ * @method updateAllBehaviors
  * @memberof THREE.Scene
  */
 THREE.Scene.prototype.updateAllBehaviors = function () {
@@ -1171,7 +1172,7 @@ THREE.Scene.prototype.updateAllBehaviors = function () {
 /**
  * Adds the given behavior to this object.
  * @instance
- * @method addBehavior 
+ * @method addBehavior
  * @param {Behavior} behavior Behavior to add.
  * @memberof THREE.Object3D
  */
@@ -1198,7 +1199,7 @@ THREE.Object3D.prototype.addBehaviors = function()
  * Removes the given behavior from this object. The behavior is disposed if
  * possible.
  * @instance
- * @method removeBehavior 
+ * @method removeBehavior
  * @param {...Behavior} behavior Behavior to remove.
  * @memberof THREE.Object3D
  */
@@ -1212,7 +1213,7 @@ THREE.Object3D.prototype.removeBehavior = function(behavior)
             if (behavior.dispose) behavior.dispose.call(behavior, this);
 
         } catch (error) {
-            
+
             console.group();
             (console.error || console.log).call(console, error.stack || error);
             console.log('[Behavior]');
@@ -1261,7 +1262,7 @@ THREE.Object3D.prototype.removeAllBehaviors = function ()
  * Retrieve a behavior by type.
  * @instance
  * @method getBehaviorByType
- * @param {String} type 
+ * @param {String} type
  * @returns {Behavior}
  * @memberof THREE.Object3D
  */
@@ -1370,8 +1371,8 @@ altspace = window.altspace || {};
 altspace.utilities = altspace.utilities || {};
 altspace.utilities.shims = altspace.utilities.shims || {};
 /**
- * Detects mouse move/up/down events, raycasts to find intersected objects, 
- * then dispatches cursor move/up/down/enter/leave events that mimics 
+ * Detects mouse move/up/down events, raycasts to find intersected objects,
+ * then dispatches cursor move/up/down/enter/leave events that mimics
  * Altspace events.
  * @module altspace/utilities/shims/cursor
  */
@@ -1385,7 +1386,7 @@ altspace.utilities.shims.cursor = (function () {
     var raycaster = new THREE.Raycaster();
 
     /**
-     * Initializes the cursor module 
+     * Initializes the cursor module
      * @static
      * @method init
      * @param {THREE.Scene} scene
@@ -1487,7 +1488,7 @@ altspace.utilities.shims.cursor = (function () {
 /**
  * The Altspace SDK adds event bubbling to Three.js' events system.
  * Simply include the SDK in your app and add a bubbling property to your event to take advantage of this feature.
- * 
+ *
  * AltspaceVR cursor events always make use of this bubbling shim.
  *
  * @example
@@ -1721,11 +1722,11 @@ window.altspace.utilities.behaviors = window.altspace.utilities.behaviors || {};
 /**
  * A behavior that makes an object draggable along a plane.
  * @class Drag
- * @param {Object} [config] Specify the axes along which the object can be 
+ * @param {Object} [config] Specify the axes along which the object can be
  *  dragged.
- *  E.g. To constraint th object to an XY plane: `{x: true, y: true}`  
+ *  E.g. To constraint th object to an XY plane: `{x: true, y: true}`
  *  Each axis can also be an object specifying the minimum and maximum limits
- *  of the constraint. E.g. `{x: {min: -10, max: 20}, y: true}`  
+ *  of the constraint. E.g. `{x: {min: -10, max: 20}, y: true}`
  *  Currently you must specify exactly two axes.
  * @memberof module:altspace/utilities/behaviors
  */
@@ -1810,7 +1811,7 @@ altspace.utilities.behaviors.Drag = function (config) {
         } else if (axisCount === 1) {
 
             throw new Error('Single axis dragging currently unsupported.');
-            //TODO: make possible, possibly via view-aligned plane 
+            //TODO: make possible, possibly via view-aligned plane
 
         } else {
             throw new Error('Invalid axis configuration');
@@ -1840,7 +1841,7 @@ altspace.utilities.behaviors.Drag = function (config) {
         scene.addEventListener('cursorup', stopDrag);
         scene.addEventListener('cursormove', moveDrag);
 
-        //Remember difference between center of object and drag point. 
+        //Remember difference between center of object and drag point.
         //Otherwise, object appears to 'jump' when selected, moving so its
         //center is directly until the cursor. We allow drag on edge of object.
         raycaster.set(event.ray.origin, event.ray.direction);
@@ -2024,7 +2025,7 @@ altspace.utilities.behaviors.GamepadControls = function (config) {
 		}
 		if (!gamepad) return;
 
-		//For axis and button numbers see: https://w3c.github.io/gamepad/  
+		//For axis and button numbers see: https://w3c.github.io/gamepad/
 		var isResetButton = gamepad.buttons[8].pressed;//reset / back button
 		if (isResetButton) {
 			if (!sync.isMine) sync.takeOwnership();
@@ -2164,7 +2165,7 @@ altspace.utilities.behaviors.HoverColor = function(config){
     //for example during a drag we don't want to change highlight
     if (cursordownObject && cursordownObject !== object3d){
       return;
-    } 
+    }
     if (cursorenterObject){
       unsetcolor(cursorenterObject);
     }
@@ -2189,10 +2190,10 @@ altspace.utilities.behaviors.HoverColor = function(config){
   function setColor(o){
     if (o.material && o.material.color){
       o.userData.origColor = o.material.color;
-      o.material.color = config.color;  
+      o.material.color = config.color;
       //Not strictly needed but seems to make updating faster in Altspace.
       if (o.material) o.material.needsUpdate = true;
-    } 
+    }
     for (var i = 0; i < o.children.length; i++){
       setColor(o.children[i], config.color);//recursively apply to children
     }
@@ -2206,7 +2207,7 @@ altspace.utilities.behaviors.HoverColor = function(config){
       }
       o.material.color = o.userData.origColor;
       if (o.material) o.material.needsUpdate = true;
-    } 
+    }
     for (var i = 0; i < o.children.length; i++){
       unsetColor(o.children[i]);
     }
@@ -2234,7 +2235,7 @@ window.altspace.utilities.behaviors = window.altspace.utilities.behaviors || {};
  *  be synced
  * @param {Boolean} [config.scale=false] Whether object's scale should
  *  be synced
- * @param {Boolean} [config.auto=false] Whether the object should be synced 
+ * @param {Boolean} [config.auto=false] Whether the object should be synced
  *  automatically. Not currently recommended.
  * @param {Boolean} [config.world=false] Whether world coordiantes should
  *  be sent when synchronizing position and rotation, instead of the
@@ -2259,7 +2260,7 @@ window.altspace.utilities.behaviors.Object3DSync = function (config){
     var isMine = false;
 
     var position = new THREE.Vector3();
-    var quaternion = new THREE.Quaternion(); 
+    var quaternion = new THREE.Quaternion();
     var scale = new THREE.Vector3();
 
 
@@ -2300,7 +2301,7 @@ window.altspace.utilities.behaviors.Object3DSync = function (config){
 
             var lost = newOwnerId !== sceneSync.clientId && isMine;
             if (lost) object3d.dispatchEvent({ type: 'ownershiplost' });
-            
+
             isMine = newOwnerId === sceneSync.clientId;
         });
     }
@@ -2311,7 +2312,7 @@ window.altspace.utilities.behaviors.Object3DSync = function (config){
         var transform = {};
         if (config.world) {
             object3d.updateMatrixWorld();//call before sending to avoid being a frame behind
-            object3d.matrixWorld.decompose(position, quaternion, scale); 
+            object3d.matrixWorld.decompose(position, quaternion, scale);
         } else {
             position = object3d.position;
             quaternion = object3d.quaternion;
@@ -2352,7 +2353,7 @@ window.altspace.utilities.behaviors.Object3DSync = function (config){
     }
 
     function update(deltaTime) {
-        
+
     }
 
     /**
@@ -2410,16 +2411,16 @@ window.altspace.utilities.behaviors = window.altspace.utilities.behaviors || {};
  * @class SceneSync
  * @param {Firebase} syncInstance
  * @param {Object} [config]
- * @param {Object} [config.instantiators] A dictionary of instantiation 
+ * @param {Object} [config.instantiators] A dictionary of instantiation
  *  callbacks by syncType. Instantiators are called on every client whenever an instantiation call is made. Instantiators are passed an initialization
- *  data object and the syncType. They should return an Object3D with an 
+ *  data object and the syncType. They should return an Object3D with an
  *  Object3DSync behavior.
- * @param {Object} [config.destroyers] (Optional) A dictionary of destroy 
+ * @param {Object} [config.destroyers] (Optional) A dictionary of destroy
  *  callbacks by syncType. Destroyers are called on every client whenever an destroy call is made. If no destroyer is provided, a default one will be use
- *  which will remove the object from its parent and dispose its geometry, material, and texture. 
+ *  which will remove the object from its parent and dispose its geometry, material, and texture.
  *  If you return true from a custom destroyer, the default destroyer will also be called.
- * @param {Function} [config.ready] A callback that is called after 
- *  checking to see if the instance has already been initialized. The callback is passed a boolean that 
+ * @param {Function} [config.ready] A callback that is called after
+ *  checking to see if the instance has already been initialized. The callback is passed a boolean that
  *  is true if this is the first callback that has been called for this sync instance.
  *  This is primarily useful for setting up any objects that should only be created once for an instance, and is not necessary otherwise.
  * @memberof module:altspace/utilities/behaviors
@@ -2463,7 +2464,7 @@ window.altspace.utilities.behaviors.SceneSync = function (instanceRef, config) {
             masterClientKey = Object.keys(clientIds)[0];
             masterClientId = clientIds[masterClientKey];
         });
-        // add our client ID to the list of connected clients, 
+        // add our client ID to the list of connected clients,
         // but have it be automatically removed by firebase if we disconnect for any reason
         clientsRef.push(clientId).onDisconnect().remove();
 
@@ -2474,7 +2475,7 @@ window.altspace.utilities.behaviors.SceneSync = function (instanceRef, config) {
                 config.ready(shouldInitialize);
             }
         });
-        
+
 
         sceneRef.on('child_added', onInstantiate.bind(this));
         sceneRef.on('child_removed', onDestroy.bind(this));
@@ -2626,7 +2627,7 @@ window.altspace.utilities.behaviors.SceneSync = function (instanceRef, config) {
     });
 
     /**
-     * True if this client is the master, false otherwise. Master is generally the client that 
+     * True if this client is the master, false otherwise. Master is generally the client that
      * has been in the room the longest.
      * @readonly
      * @instance
@@ -2638,7 +2639,7 @@ window.altspace.utilities.behaviors.SceneSync = function (instanceRef, config) {
     });
 
     /**
-     * UUID of the current client. 
+     * UUID of the current client.
      * @readonly
      * @instance
      * @member {string} clientId
@@ -2671,7 +2672,7 @@ window.altspace.utilities.behaviors = window.altspace.utilities.behaviors || {};
  *
  * @class Spin
  * @param {Object} [config]
- * @param {Number} [config.speed=0.0001] Rotation speed in radians per 
+ * @param {Number} [config.speed=0.0001] Rotation speed in radians per
  *  millisecond
  * @memberof module:altspace/utilities/behaviors
  **/
@@ -3242,7 +3243,7 @@ module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
       , ACCEPT_ITERABLES     = $iterDetect(function(iter){ new C(iter); }) // eslint-disable-line no-new
       // for early implementations -0 and +0 not the same
       , BUGGY_ZERO;
-    if(!ACCEPT_ITERABLES){ 
+    if(!ACCEPT_ITERABLES){
       C = wrapper(function(target, iterable){
         strictNew(target, C, NAME);
         var that = new Base;
@@ -7585,27 +7586,27 @@ var containerMax = _Symbol('containerMax'),
     origParentBoundingBoxes = new _Map();
 
 /**
- * The Layout behavior allows you to position objects easily. You can 
- * position an object relative to its parent (either the Scene or a 
+ * The Layout behavior allows you to position objects easily. You can
+ * position an object relative to its parent (either the Scene or a
  * another object) by using a position specifier for each of the axes.
  * The position specifier can be one of 'min', 'center' or 'max'. The default
  * specifier is 'center'. You can also add a modifier to the position in pixels
- * ('min+5'), a percentage ('min+10%') or meters ('min+1m'). Finally, you can 
- * choose the location of the anchor on the object you are trying to position 
+ * ('min+5'), a percentage ('min+10%') or meters ('min+1m'). Finally, you can
+ * choose the location of the anchor on the object you are trying to position
  * by using the 'my' parameter.
  * You must specify at least one axis on the 'at' parameter.
  *
  * @example
  * // Position the top of the cube at 1.5 meters above the bottom of its parent.
  * cube.addBehavior(new altpsace.utilities.behaviors.Layout({
- *	   my: {y: 'max'}, 
+ *	   my: {y: 'max'},
  *	   at: {y: 'min+1.5m'}
  * });
  *
  * @class Layout
  * @memberof module:altspace/utilities/behaviors
  * @param {Object} config
- * @param {Object} config.at An object containing the axes and position 
+ * @param {Object} config.at An object containing the axes and position
  *  specifiers. At least one axis must be specificed. E.g. `{x: 'min', y: 'max-5%'}`
  * @param {Object} [config.my] An object containing the axes and position
  *  specifiers for the layout anchor.

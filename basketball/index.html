@@ -2,10 +2,11 @@
 <html lang=en>
 <head>
 <meta charset=utf-8>
-<title>SynthBasic</title>
+<title>Basketball</title>
 <script src="http://sdk.altvr.com/libs/three.js/r73/build/three.js"></script>
 <script src="http://underscorejs.org/underscore-min.js"></script>
-<script src="../dist/altspace.min.js"></script>
+<script src="../dist/altspace.js"></script>
+<script src="../dist/physi.js"></script>
 <script src="http://sdk.altvr.com/libs/three.js/r73/examples/js/loaders/MTLLoader.js"></script>
 
 </head>
@@ -19,7 +20,19 @@ var config = {
 	authorId: 'mo1ok',
 	appId: 'basketball'
 };
-
+renderer = new THREE.WebGLRenderer({ antialias: true });
+function render() {
+	sim.scene.simulate(); // run physics
+  requestAnimationFrame( render );
+} //
+function createBall() {
+	box = new Physijs.BoxMesh(
+				new THREE.CubeGeometry( 50, 50, 50 ),
+				new THREE.MeshBasicMaterial({ color: 0x888888 })
+		);
+	sim.scene.add(box);
+	return box;
+}
 function connectAltSpace() {
 	altspace.utilities.sync.connect(config).then(
 		function(connection) {
@@ -35,7 +48,7 @@ function connectAltSpace() {
 }
 function ready(firstInstance) {
 	if (firstInstance) {
-		sceneSync.instantiate('createSynth');
+		sceneSync.instantiate('createBall');
 	}
 }
 function main() {
