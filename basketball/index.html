@@ -38,7 +38,7 @@ function createTable() {
 	// table
 	var table = new Physijs.BoxMesh(
 		new THREE.BoxGeometry(900, 5, 900),
-		new THREE.MeshBasicMaterial({ color: 0x888888 }),
+		new THREE.MeshBasicMaterial({ color: 0x111111 }),
 		0, // mass
 		{ restitution: .2, friction: .8 }
 	);
@@ -54,6 +54,10 @@ function createTable() {
 	box.position.y = -200
 	box.position.x = -300
 	sim.scene.add(box);
+	box.addBehaviors(
+		alt.Object3DSync(),
+		alt.Drag({x: {min: 0, max: 1000}, y: true})
+	);
 	box.setLinearVelocity(new THREE.Vector3(200, 0, 0));
 
 	sim.scene.add(table);
