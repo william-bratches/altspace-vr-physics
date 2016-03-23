@@ -28,10 +28,30 @@ function render() {
 function createBall() {
 	box = new Physijs.BoxMesh(
 				new THREE.CubeGeometry( 50, 50, 50 ),
-				new THREE.MeshBasicMaterial({ color: 0x888888 })
+				new THREE.MeshBasicMaterial({ color: 0x181818 })
 		);
 	sim.scene.add(box);
 	return box;
+}
+
+function createTable() {
+	var table = new Physijs.BoxMesh(
+		new THREE.BoxGeometry(900, 5, 900),
+		new THREE.MeshBasicMaterial({ color: 0x888888 }),
+		0, // mass
+		{ restitution: .2, friction: .8 }
+	);
+	table.position.y = -500;
+	box = new Physijs.BoxMesh(
+				new THREE.CubeGeometry( 50, 50, 50 ),
+				new THREE.MeshBasicMaterial({ color: 0x118181 }),
+				100
+		);
+	box.rotation.x = 35;
+	sim.scene.add(box);
+
+	sim.scene.add(table);
+	//return table;
 }
 function connectAltSpace() {
 	altspace.utilities.sync.connect(config).then(
@@ -40,6 +60,7 @@ function connectAltSpace() {
 		    {
 		      instantiators: {
 						'createBall': createBall,
+						'createTable': createTable,
 				 		},
 		      ready: ready
 		    });
@@ -48,6 +69,7 @@ function connectAltSpace() {
 }
 function ready(firstInstance) {
 	if (firstInstance) {
+		sceneSync.instantiate('createTable');
 		sceneSync.instantiate('createBall');
 	}
 }
