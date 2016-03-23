@@ -35,6 +35,7 @@ function createBall() {
 }
 
 function createTable() {
+	// table
 	var table = new Physijs.BoxMesh(
 		new THREE.BoxGeometry(900, 5, 900),
 		new THREE.MeshBasicMaterial({ color: 0x888888 }),
@@ -42,15 +43,32 @@ function createTable() {
 		{ restitution: .2, friction: .8 }
 	);
 	table.position.y = -500;
-	box = new Physijs.BoxMesh(
-				new THREE.CubeGeometry( 50, 50, 50 ),
+
+	// box
+	var box = new Physijs.BoxMesh(
+				new THREE.BoxGeometry( 50, 50, 50 ),
 				new THREE.MeshBasicMaterial({ color: 0x118181 }),
 				100
-		);
+	);
 	box.rotation.x = 35;
+	box.position.y = -200
+	box.position.x = -300
 	sim.scene.add(box);
+	box.setLinearVelocity(new THREE.Vector3(200, 0, 0));
 
 	sim.scene.add(table);
+
+	for (var i = 0; i < 6; i++) {
+		var box = new Physijs.BoxMesh(
+					new THREE.CubeGeometry( 10, 100, 50 ),
+					new THREE.MeshBasicMaterial({ color: 0x315135 }),
+					50
+		);
+		box.position.y = -400;
+		box.position.x = i * 60;
+		sim.scene.add(box);
+	}
+
 	//return table;
 }
 function connectAltSpace() {

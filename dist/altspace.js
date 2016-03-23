@@ -905,9 +905,10 @@ altspace.utilities.Simulation = function (config) {
 		Physijs.scripts.ammo = '../dist/ammo.js';
 		Physijs.scripts.worker = '../dist/physijs_worker.js';
     var exports = {};
-    var scene = new Physijs.Scene();
+    var scene = new Physijs.Scene({ reportsize: 50, fixedTimeStep: 1 / 60 });
     var renderer;
     var camera;
+		scene.setGravity(new THREE.Vector3( 0, -200, 0 ))
 
     setup();
 
