@@ -902,8 +902,8 @@ window.altspace.utilities = window.altspace.utilities || {};
 altspace.utilities.Simulation = function (config) {
     config = config || {};
     if (config.auto === undefined) config.auto = true;
-		Physijs.scripts.ammo = '../dist/ammo.js';
-		Physijs.scripts.worker = '../dist/physijs_worker.js';
+    Physijs.scripts.ammo = '../dist/ammo.js';
+    Physijs.scripts.worker = '../dist/physijs_worker.js';
     var exports = {};
     var scene = new Physijs.Scene({ reportsize: 50, fixedTimeStep: 1 / 60 });
     var renderer;
@@ -913,12 +913,12 @@ altspace.utilities.Simulation = function (config) {
     setup();
 
     function loop() {
-			  scene.simulate();
-        window.requestAnimationFrame(loop);
+      scene.simulate();
+      window.requestAnimationFrame(loop);
 
-        if (scene.updateAllBehaviors)
-            scene.updateAllBehaviors();
-        renderer.render(scene, camera);
+      if (scene.updateAllBehaviors)
+          scene.updateAllBehaviors();
+      renderer.render(scene, camera);
     }
 
     function setup() {
