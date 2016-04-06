@@ -17,79 +17,79 @@
 var sceneSync;
 var sim = altspace.utilities.Simulation();
 var config = {
-	authorId: 'mo1ok',
-	appId: 'basketball'
+  authorId: 'mo1ok',
+  appId: 'basketball'
 };
 
 function createTable() {
-	var table = new Physijs.BoxMesh(
-		new THREE.BoxGeometry(900, 5, 900),
-		new THREE.MeshBasicMaterial({ color: 0xE3E3E3 }),
-		0, // mass
-		{ restitution: .2, friction: .8 }
-	);
-	table.position.y = -500;
-	sim.scene.add(table);
-	return table;
+  var table = new Physijs.BoxMesh(
+    new THREE.BoxGeometry(900, 5, 900),
+    new THREE.MeshBasicMaterial({ color: 0xE3E3E3 }),
+    0, // mass
+    { restitution: .2, friction: .8 }
+  );
+  table.position.y = -500;
+  sim.scene.add(table);
+  return table;
 }
 
 function createDominos() {
-	for (var i = 0; i < 6; i++) {
-		var domino = new Physijs.BoxMesh(
-			new THREE.CubeGeometry( 10, 100, 50 ),
-			new THREE.MeshBasicMaterial({ color: 0x2E2E2E }),
-			50
-		);
-		domino.position.y = -400;
-		domino.position.x = i * 60;
-		sim.scene.add(domino);
-	}
+  for (var i = 0; i < 6; i++) {
+    var domino = new Physijs.BoxMesh(
+      new THREE.CubeGeometry( 10, 100, 50 ),
+      new THREE.MeshBasicMaterial({ color: 0x2E2E2E }),
+      50
+    );
+    domino.position.y = -400;
+    domino.position.x = i * 60;
+    sim.scene.add(domino);
+  }
 }
 
 function createBox() {
-	var box = new Physijs.BoxMesh(
-				new THREE.BoxGeometry( 50, 50, 50 ),
-				new THREE.MeshBasicMaterial({ color: 0x118181 }),
-				100
-	);
-	box.rotation.x = 35;
-	box.position.y = -200
-	box.position.x = -300
-	sim.scene.add(box);
-	return box;
+  var box = new Physijs.BoxMesh(
+        new THREE.BoxGeometry( 50, 50, 50 ),
+        new THREE.MeshBasicMaterial({ color: 0x118181 }),
+        100
+  );
+  box.rotation.x = 35;
+  box.position.y = -200
+  box.position.x = -300
+  sim.scene.add(box);
+  return box;
 }
 
 function addForce(shape) {
-	shape.setLinearVelocity(new THREE.Vector3(200, 0, 0));
+  shape.setLinearVelocity(new THREE.Vector3(200, 0, 0));
 }
 
 function init() {
-	var box = createBox()
-	createDominos();
-	createTable();
-	addForce(box);
-	return box; 
+  var box = createBox()
+  createDominos();
+  createTable();
+  addForce(box);
+  return box;
 }
 function connectAltSpace() {
-	altspace.utilities.sync.connect(config).then(
-		function(connection) {
-		  sceneSync = altspace.utilities.behaviors.SceneSync(connection.instance,
-		    {
-		      instantiators: {
-						'init': init,
-				 		},
-		      ready: ready
-		    });
-		  sim.scene.addBehavior(sceneSync);
-	});
+  altspace.utilities.sync.connect(config).then(
+    function(connection) {
+      sceneSync = altspace.utilities.behaviors.SceneSync(connection.instance,
+        {
+          instantiators: {
+            'init': init,
+             },
+          ready: ready
+        });
+      sim.scene.addBehavior(sceneSync);
+  });
 }
 function ready(firstInstance) {
-	if (firstInstance) {
-		sceneSync.instantiate('init');
-	}
+  if (firstInstance) {
+    sceneSync.instantiate('init');
+  }
 }
 function main() {
-	connectAltSpace();
+  connectAltSpace();
 }
 main();
 </script>
