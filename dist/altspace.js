@@ -909,7 +909,6 @@ altspace.utilities.Simulation = function (config) {
     var renderer;
     var camera;
 		scene.setGravity(new THREE.Vector3( 0, -200, 0 ))
-
     setup();
 
     function loop() {
