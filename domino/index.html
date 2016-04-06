@@ -20,31 +20,33 @@ var config = {
 	authorId: 'mo1ok',
 	appId: 'basketball'
 };
-renderer = new THREE.WebGLRenderer({ antialias: true });
-function render() {
-	sim.scene.simulate(); // run physics
-  requestAnimationFrame( render );
-} //
-function createBall() {
-	box = new Physijs.BoxMesh(
-				new THREE.CubeGeometry( 50, 50, 50 ),
-				new THREE.MeshBasicMaterial({ color: 0x181818 })
-		);
-	sim.scene.add(box);
-	return box;
-}
 
 function createTable() {
-	// table
 	var table = new Physijs.BoxMesh(
 		new THREE.BoxGeometry(900, 5, 900),
-		new THREE.MeshBasicMaterial({ color: 0x111111 }),
+		new THREE.MeshBasicMaterial({ color: 0xE3E3E3 }),
 		0, // mass
 		{ restitution: .2, friction: .8 }
 	);
 	table.position.y = -500;
+	sim.scene.add(table);
+	return table;
+}
 
-	// box
+function createDominos() {
+	for (var i = 0; i < 6; i++) {
+		var domino = new Physijs.BoxMesh(
+			new THREE.CubeGeometry( 10, 100, 50 ),
+			new THREE.MeshBasicMaterial({ color: 0x2E2E2E }),
+			50
+		);
+		domino.position.y = -400;
+		domino.position.x = i * 60;
+		sim.scene.add(domino);
+	}
+}
+
+function createBox() {
 	var box = new Physijs.BoxMesh(
 				new THREE.BoxGeometry( 50, 50, 50 ),
 				new THREE.MeshBasicMaterial({ color: 0x118181 }),
@@ -54,26 +56,19 @@ function createTable() {
 	box.position.y = -200
 	box.position.x = -300
 	sim.scene.add(box);
-	box.addBehaviors(
-		alt.Object3DSync(),
-		alt.Drag({x: {min: 0, max: 1000}, y: true})
-	);
-	box.setLinearVelocity(new THREE.Vector3(200, 0, 0));
+	return box;
+}
 
-	sim.scene.add(table);
+function addForce(shape) {
+	shape.setLinearVelocity(new THREE.Vector3(200, 0, 0));
+}
 
-	for (var i = 0; i < 6; i++) {
-		var box = new Physijs.BoxMesh(
-					new THREE.CubeGeometry( 10, 100, 50 ),
-					new THREE.MeshBasicMaterial({ color: 0x315135 }),
-					50
-		);
-		box.position.y = -400;
-		box.position.x = i * 60;
-		sim.scene.add(box);
-	}
-
-	//return table;
+function init() {
+	var box = createBox()
+	createDominos();
+	createTable();
+	addForce(box);
+	return box;
 }
 function connectAltSpace() {
 	altspace.utilities.sync.connect(config).then(
@@ -81,8 +76,7 @@ function connectAltSpace() {
 		  sceneSync = altspace.utilities.behaviors.SceneSync(connection.instance,
 		    {
 		      instantiators: {
-						'createBall': createBall,
-						'createTable': createTable,
+						'init': init,
 				 		},
 		      ready: ready
 		    });
@@ -91,8 +85,7 @@ function connectAltSpace() {
 }
 function ready(firstInstance) {
 	if (firstInstance) {
-		sceneSync.instantiate('createTable');
-		sceneSync.instantiate('createBall');
+		sceneSync.instantiate('init');
 	}
 }
 function main() {
